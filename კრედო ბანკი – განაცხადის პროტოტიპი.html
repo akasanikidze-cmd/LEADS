@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ka"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>კრედო ბანკი – განაცხადის პროტოტიპი</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;600;700&display=swap">
+<style>
+:root{--bg:#f7f5f3;--card:#fff;--tx:#1f2430;--mu:#6b7280;--br:#ebe6e1;--pr:#f26b1d;--pr2:#fff0e6;--ac:#f26b1d;--wb:#fff3e6;--wa:#b45309;--ok:#12805c;--rd:#b42318;--ft:#1e1e22;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17130f;--card:#221c17;--tx:#f3ece6;--mu:#b3a79c;--br:#3a312a;--pr:#ff8a48;--pr2:#3a2414;--wb:#3a2a14;--wa:#f5b45c;--ok:#4cd2a0;--rd:#ff8a80;--ft:#080f1d;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#17130f;--card:#221c17;--tx:#f3ece6;--mu:#b3a79c;--br:#3a312a;--pr:#ff8a48;--pr2:#3a2414;--wb:#3a2a14;--wa:#f5b45c;--ok:#4cd2a0;--rd:#ff8a80;--ft:#080f1d;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--tx);font:15px/1.5 "Noto Sans Georgian",system-ui,sans-serif}
+.demo{background:#101828;color:#fff;font-size:12px;padding:6px 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.demo select,.demo button{width:auto;padding:4px 8px;font-size:12px;border-radius:6px;border:0}
+.top{background:var(--card);border-bottom:1px solid var(--br)}.top .in{max-width:1080px;margin:0 auto;padding:6px 16px;display:flex;justify-content:space-between;font-size:13px;color:var(--mu);gap:12px;flex-wrap:wrap}
+.nav{background:var(--card);border-bottom:1px solid var(--br)}.nav .in{max-width:1080px;margin:0 auto;padding:12px 16px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;font-size:14px}
+.logo{font-size:26px;font-weight:700;color:var(--pr);letter-spacing:.5px;cursor:pointer}.logo i{color:var(--tx);font-style:normal}.nav a{color:var(--tx);cursor:pointer}.nav .sp{flex:1}
+.seg{display:flex;border:1px solid var(--br);border-radius:99px;overflow:hidden}.seg span{padding:5px 14px;font-size:13px}.seg .on{background:var(--pr);color:#fff}
+.w{max-width:1080px;margin:0 auto;padding:20px 16px}.bc{font-size:13px;color:var(--mu);margin-bottom:10px}.bc a{color:var(--pr);cursor:pointer}
+h1{margin:0 0 6px;font-size:30px}h2{margin:0 0 6px;font-size:20px}h3{margin:0 0 8px;font-size:16px}.mu{color:var(--mu);font-size:13px}
+.c{background:var(--card);border:1px solid var(--br);border-radius:16px;padding:18px;margin-bottom:14px}
+.chips{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}.chip{padding:6px 16px;border-radius:99px;border:1px solid var(--br);background:var(--card);cursor:pointer;font-size:14px}.chip.on{background:var(--pr);border-color:var(--pr);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}.pc{background:var(--card);border:1px solid var(--br);border-radius:16px;padding:18px;cursor:pointer;display:flex;flex-direction:column;gap:8px;transition:.15s}.pc:hover{border-color:var(--pr);box-shadow:0 6px 18px #f26b1d26}.pc b{font-size:17px}
+.two{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;align-items:start}@media(max-width:800px){.two{grid-template-columns:1fr}}
+.cond{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--br)}.cond:last-child{border:0}.cond b{text-align:right}
+.adv{display:flex;gap:10px;margin:8px 0}.adv:before{content:"✓";color:var(--ok);font-weight:700}
+label{display:block;margin:10px 0 4px;font-size:13px;color:var(--mu)}input,select{width:100%;padding:11px;border:1px solid var(--br);border-radius:10px;background:var(--card);color:var(--tx);font:inherit}
+button{border:0;border-radius:10px;padding:11px 16px;cursor:pointer;background:var(--pr);color:#fff;font:inherit;font-weight:600}button.o{background:var(--ac)}button.s{background:var(--pr2);color:var(--pr)}button.d{background:transparent;color:var(--rd);border:1px solid var(--rd)}
+.r{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.r>*{flex:1}.ck{display:flex;gap:10px;margin:8px 0;font-size:13px}.ck input{width:auto;margin-top:3px}
+.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;background:var(--pr2);color:var(--pr)}.tag.w2{background:var(--wb);color:var(--wa)}.tag.x{background:var(--bg);color:var(--mu)}
+.err{color:var(--rd);font-size:13px;margin-top:6px}.ok{color:var(--ok)}.t{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:12px}th,td{border-bottom:1px solid var(--br);padding:6px;text-align:left;white-space:nowrap}
+.m{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:16px;z-index:9}.m .c{max-width:440px;width:100%;margin:0}
+.ft{background:var(--ft);color:#b8c4dc;font-size:13px;margin-top:30px}.ft .in{max-width:1080px;margin:0 auto;padding:22px 16px;display:flex;gap:30px;flex-wrap:wrap;justify-content:space-between}
+</style></head><body>
+<div class="demo"><b>დემო</b>არხი:<select id="chan"><option>web-product-page</option><option>web-home</option><option>landing-meta</option><option>landing-google</option></select>
+<select id="mode" onchange="go(this.value)"><option value="cust">კლიენტის ხედი</option><option value="crm">CRM ხედი (ბაზა)</option></select><button onclick="resetDemo()">განულება</button><span>OTP: 1234 · არსებული კლიენტი: 01001000001</span></div>
+<div class="top"><div class="in"><span>რჩეული &nbsp; ემიგრანტები &nbsp; ექსპატები</span><span>ინტერნეტ ბანკი &nbsp; ვიდეო ბანკი &nbsp; Geo</span></div></div>
+<div class="nav"><div class="in"><span class="logo" onclick="S.prod=null;go('list')">cre<i>d</i>o</span><a onclick="S.prod=null;go('list')"><b>პროდუქტები</b></a><a>სერვისები</a><a>შეთავაზებები</a><a>მედია</a><a>ჩვენ შესახებ</a><a>კარიერა</a><a>კონტაქტი</a><span class="sp"></span><a onclick="S.cur?go('panel'):alert('ჯერ გაიარე ნომრის დადასტურება განაცხადისას')">ჩემი განაცხადები</a><div class="seg"><span class="on">სამომხმარებლო</span><span>ბიზნესი</span></div></div></div>
+<div class="w" id="app"></div><div id="modal"></div>
+<div class="ft"><div class="in"><div>რ. თაბუკაშვილის ქ. #27, თბილისი<br>(+995 32) 2 42 42 42 · Info@credo.ge</div><div>პირობები და ტარიფები · მონაცემთა დაცვა · კონტაქტი</div></div></div>
+<script>
+const L=(n,d,min,max,tmin,tmax,cond,adv,ex)=>({n,cat:"სესხები",d,min,max,tmin,tmax,cond,adv,ex});
+const P=[
+L("სამომხმარებლო სესხი","ნებისმიერი მიზნით, შემოსავლის ნებისმიერი წყაროთი",501,150000,4,120,[["თანხა (უზრუნველყოფის გარეშე)","501 – 15 000 ₾"],["ვადა","4 – 24 თვე"],["წლიური საპროცენტო განაკვეთი","10.90%-დან"],["ეფექტური განაკვეთი","22.5%-დან"],["გაცემის საკომისიო","2%-დან"],["თანხა (უზრუნველყოფით)","7 500 – 150 000 ₾"]],["სწრაფი და მარტივი პროცესი","მოქნილი დაფარვის გრაფიკი","ნებისმიერი სტაბილური შემოსავალი"],"სესხის მიზანი"),
+L("იპოთეკური სესხი","იყიდე, ააშენე ან გაარემონტე უძრავი ქონება",10000,500000,7,180,[["თანხა","10 000 – 500 000 ₾"],["ვადა","7 – 180 თვე"],["წლიური საპროცენტო განაკვეთი","13.15%-დან"],["ეფექტური განაკვეთი","15.59%-დან"]],["შემოსავლის ნებისმიერი წყარო","პარტნიორი დეველოპერების შეთავაზებები","სუბსიდირებული იპოთეკა"],"უძრავი ქონების ტიპი"),
+L("ავტო სესხი","ახალი ან მეორადი ავტომობილის შესაძენად",1000,70000,12,72,[["თანხა","70 000 ₾-მდე"],["ვადა","12 – 72 თვე"],["ეფექტური განაკვეთი","19.86%-დან"],["გაცემის საკომისიო","0%"],["დაფინანსება","ღირებულების 75%-მდე"]],["შემოსავლის ნებისმიერი ტიპი","საშეღავათო პერიოდი 6 თვემდე","მოქნილი გრაფიკი"],"ავტომობილის მარკა/წელი"),
+L("ავტო ლომბარდი","თანხა ავტომობილის უზრუნველყოფით, პასუხი 40 წუთში",1000,50000,12,72,[["თანხა","50 000 ₾-მდე"],["ვადა","72 თვემდე"],["წლიური განაკვეთი","24%-დან"],["ეფექტური განაკვეთი","27.08%-დან"],["საშეღავათო პერიოდი","6 თვე"]],["შემოსავლის დადასტურება არ არის საჭირო","საკომისიოს გარეშე","პასუხი 40 წუთში"],"ავტომობილის მარკა/წელი"),
+L("დეპოზიტით უზრუნველყოფილი სესხი","სესხი შენი ანაბრის უზრუნველყოფით",500,500000,3,120,[["განაკვეთი","ანაბრის განაკვეთი +3%"],["თანხა","ანაბრის თანხის მიხედვით"],["ვადა","ანაბრის ვადის შესაბამისი"],["გაცემის საკომისიო","0%"]],["პირადობის მოწმობით","შეღავათიანი განაკვეთი","ნებისმიერი მიზნობრიობა"],"ანაბრის ვალუტა"),
+L("ბიზნეს სესხი","ბიზნესის დასაფინანსებლად",501,150000,4,180,[["თანხა (უზრუნველყოფის გარეშე)","501 – 40 000 ₾"],["ვადა","4 – 24 თვე"],["წლიური განაკვეთი","19%-დან"],["თანხა (უზრუნველყოფით)","501 – 150 000 ₾"],["ვადა (უზრუნველყოფით)","7 – 180 თვე"]],["სწრაფი გადაწყვეტილება","მოქნილი პირობები","ონლაინ განაცხადი"],"ბიზნესის სფერო"),
+{n:"სადებეტო ბარათი",cat:"ბარათები",d:"ყოველდღიური გადახდებისთვის",min:0,max:0,tmin:0,tmax:0,cond:[["დემო","პირობები დემოში არ არის შევსებული"]],adv:["დისტანციური შეკვეთა","მიტანა სასურველ მისამართზე"],ex:"ბარათის ტიპი"},
+{n:"საკრედიტო ბარათი",cat:"ბარათები",d:"საკრედიტო ლიმიტი ყოველდღიური საჭიროებისთვის",min:0,max:0,tmin:0,tmax:0,cond:[["დემო","პირობები დემოში არ არის შევსებული"]],adv:["საშეღავათო პერიოდი","მოქნილი ლიმიტი"],ex:"სასურველი ლიმიტი"},
+{n:"ვადიანი ანაბარი",cat:"ანაბრები",d:"დააგროვე და მიიღე წინასწარ განსაზღვრული შემოსავალი",min:0,max:0,tmin:0,tmax:0,cond:[["დემო","პირობები დემოში არ არის შევსებული"]],adv:["ფიქსირებული განაკვეთი","GEL, USD, EUR"],ex:"ვალუტა"}];
+const CATS=["სესხები","ბარათები","ანაბრები"],BR=["ცენტრალური ოფისი (თბილისი)","საბურთალო","ვაკე","გლდანი","ბათუმი","ქუთაისი"];
+const SEED={"01001000001":"c0a80001-0000-4000-8000-000000000001"};
+let DB,S;const init=()=>{DB={clients:[],consents:[],applications:[],events:[]};S={screen:"list",cat:"სესხები",prod:null,step:"id",cur:null,pending:null,editId:null,seq:1000};};init();
+const $=id=>document.getElementById(id),uid=()=>crypto.randomUUID?crypto.randomUUID():"xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx".replace(/x/g,()=>(Math.random()*16|0).toString(16)),now=()=>new Date().toLocaleString("ka-GE"),log=(t,d)=>DB.events.push({at:now(),t,d});
+const pr=n=>P.find(p=>p.n===n),mine=()=>DB.applications.filter(a=>a.client_id===S.cur.client_id),active=()=>mine().filter(a=>a.status!=="გაუქმებულია");
+function go(s){S.screen=s==="cust"?(S.cur?"panel":"list"):s;$("mode").value=s==="crm"?"crm":"cust";draw();scrollTo(0,0);}
+function resetDemo(){init();$("mode").value="cust";draw();}
+function draw(){$("modal").innerHTML="";$("app").innerHTML=({list,prod,panel,crm})[S.screen]();}
+const bc=x=>`<div class="bc"><a onclick="S.prod=null;go('list')">მთავარი</a> › <a onclick="S.prod=null;go('list')">პროდუქტები</a>${x?" › "+x:""}</div>`;
+
+function list(){return bc("სესხები")+`<h1>${S.cat}</h1><p class="mu">თქვენს საჭიროებებზე მორგებული პროდუქტები</p><div class="chips">${CATS.map(c=>`<span class="chip ${c===S.cat?"on":""}" onclick="S.cat='${c}';draw()">${c}</span>`).join("")}</div>
+<div class="grid">${P.filter(p=>p.cat===S.cat).map(p=>`<div class="pc" onclick="openProd('${p.n}')"><b>${p.n}</b><span class="mu">${p.d}</span><span class="tag" style="align-self:flex-start">${p.cond[0][1]}</span><button class="s" style="margin-top:auto">გამოთვალე და მოითხოვე</button></div>`).join("")}</div>`;}
+function openProd(n){S.prod=n;S.step="id";S.editId=null;S.screen="prod";draw();scrollTo(0,0);}
+
+function prod(){const p=pr(S.prod);return bc(p.n)+`<div class="two"><div><h1>${p.n}</h1><p>${p.d}</p>
+<div class="c"><h3>პირობები</h3>${p.cond.map(c=>`<div class="cond"><span class="mu">${c[0]}</span><b>${c[1]}</b></div>`).join("")}</div>
+<div class="c"><h3>როგორ მოვითხოვო</h3><div class="adv">MyCredo ინტერნეტ და მობილური ბანკი</div><div class="adv">ნებისმიერი კრედო ბანკის სერვის ცენტრი</div><div class="adv">ონლაინ ჩატი · 0322424242</div><div class="adv">განაცხადის შევსება პირდაპირ ამ გვერდზე</div></div>
+<div class="c"><h3>უპირატესობები</h3>${p.adv.map(a=>`<div class="adv">${a}</div>`).join("")}</div></div>
+<div id="side">${side(p)}</div></div>`;}
+function side(p){const st=S.step;
+if(st==="id")return `<div class="c" style="position:sticky;top:10px"><h2>განაცხადი</h2><p class="mu">${p.n}</p><label>პირადი ნომერი</label><input id="pid" maxlength="11" inputmode="numeric" placeholder="11 ციფრი">
+<label>ტელეფონი</label><input id="ph" maxlength="9" inputmode="numeric" placeholder="5XX XXX XXX">
+<div class="ck"><input type="checkbox" id="c1"><span>ვადასტურებ ჩემი მონაცემების დამუშავებას განაცხადის განსახილველად (სავალდებულო)</span></div>
+<div class="ck"><input type="checkbox" id="c2"><span>თანახმა ვარ, მივიღო მარკეტინგული შეთავაზებები</span></div>
+<div class="ck"><input type="checkbox" id="c3"><span>თანახმა ვარ, მომთავაზონ საბანკო პროდუქტები</span></div>
+<div class="err" id="e"></div><button class="o" style="width:100%;margin-top:6px" onclick="sendOtp()">კოდის გაგზავნა</button></div>`;
+if(st==="otp")return `<div class="c"><h2>ნომრის დადასტურება</h2><p class="mu">კოდი გაიგზავნა ${S.pending.ph}-ზე</p><input id="code" maxlength="4" inputmode="numeric" placeholder="----"><div class="err" id="e"></div><div class="r"><button class="o" onclick="checkOtp()">დადასტურება</button><button class="s" onclick="S.step='id';draw()">უკან</button></div></div>`;
+if(st==="verify")return `<div class="c"><h2>ბანკის კლიენტი ჯერ არ ხართ</h2><p class="mu">გაიარეთ ონლაინ ვერიფიკაცია ან უბრალოდ დატოვეთ განაცხადი — ოპერატორი დაგირეკავთ.</p><div class="r"><button class="o" onclick="vfy(1)">ონლაინ ვერიფიკაცია</button><button class="s" onclick="vfy(0)">დატოვე განაცხადი</button></div></div>`;
+if(st==="vwait")return `<div class="c"><h2>ვერიფიკაცია…</h2><p class="mu">პირადობა ✓ → სელფი ✓ → შედარება…</p></div>`;
+if(st==="done"){const a=S.last;return `<div class="c"><h2 class="ok">განაცხადი მიღებულია ✓</h2><p>ნომერი: <b>${a.app_id}</b><br>${a.request_type}<br>${a.amount} ₾ · ${a.term} თვე · ${a.branch}</p><button style="width:100%" onclick="go('panel')">ჩემი განაცხადები</button></div>`;}
+const e=S.editId?DB.applications.find(a=>a.app_id===S.editId):null,x=e||{},q=e?pr(e.product):p;
+return `<div class="c"><h2>${e?"რედაქტირება "+e.app_id:"განაცხადი"}</h2><label>პროდუქტი</label><select id="pd">${CATS.map(c=>`<optgroup label="${c}">${P.filter(z=>z.cat===c).map(z=>`<option ${z.n===q.n?"selected":""}>${z.n}</option>`).join("")}</optgroup>`).join("")}</select>
+<label>სასურველი თანხა (₾)</label><input id="amt" type="number" value="${x.amount||""}"><label>ვადა (თვე)</label><input id="term" type="number" value="${x.term||""}">
+<label>სასურველი ფილიალი</label><select id="br">${BR.map(b=>`<option ${b===x.branch?"selected":""}>${b}</option>`).join("")}</select>
+<label>${q.ex}</label><input id="ex" value="${x.extra||""}"><div class="err" id="e"></div>
+<div class="r"><button class="o" onclick="submitApp()">გაგზავნა</button><button class="s" onclick="S.editId=null;go(active().length?'panel':'list')">უკან</button></div></div>`;}
+
+function sendOtp(){const pid=$("pid").value,ph=$("ph").value;let e="";
+if(!/^\d{11}$/.test(pid))e="პირადი ნომერი უნდა შედგებოდეს 11 ციფრისგან";else if(!/^5\d{8}$/.test(ph))e="ტელეფონი: 5-ით დაწყებული 9 ციფრი";else if(!$("c1").checked)e="დამუშავებაზე თანხმობა სავალდებულოა";
+if(e){$("e").textContent=e;return;}S.pending={pid,ph,marketing:$("c2").checked,offers:$("c3").checked,at:now()};S.tries=0;log("consent_pending",ph);S.step="otp";draw();}
+function checkOtp(){if($("code").value!=="1234"){S.tries++;$("e").textContent="არასწორი კოდი ("+S.tries+"/3)";if(S.tries>=3){S.pending=null;log("otp_failed","");S.step="id";setTimeout(draw,800);}return;}
+const p=S.pending;let c=DB.clients.find(x=>x.phone===p.ph);
+if(!c){c={client_id:SEED[p.pid]||uid(),pid:p.pid,phone:p.ph,is_bank_client:!!SEED[p.pid],verification:SEED[p.pid]?"არსებული კლიენტი":"შეუმოწმებელი",priority:"-"};DB.clients.push(c);}
+DB.consents.push({client:c.client_id.slice(0,8),processing:true,marketing:p.marketing,offers:p.offers,text_version:"v1.0",channel:$("chan").value,given_at:p.at,otp_validated_at:now(),status:"ძალაშია"});
+log("otp_ok+consent_active",c.client_id);S.cur=c;
+if(c.verification==="შეუმოწმებელი"){S.step="verify";draw();}else next();}
+function vfy(on){S.cur.verification=on?"ონლაინ ვერიფიცირებული":"არავერიფიცირებული (საჭიროა ზარი)";S.cur.priority=on?"მაღალი":"ჩვეულებრივი";log("verification",S.cur.verification);if(on){S.step="vwait";draw();setTimeout(next,1200);}else next();}
+function next(){if(active().length){S.screen="panel";draw();}else{S.step="form";draw();}}
+function submitApp(){const p=pr($("pd").value),amt=+$("amt").value,term=+$("term").value;let e="";
+if(p.min&&(amt<p.min||amt>p.max))e=`თანხა: ${p.min} – ${p.max} ₾`;else if(p.tmin&&(term<p.tmin||term>p.tmax))e=`ვადა: ${p.tmin} – ${p.tmax} თვე`;else if(!(amt>0&&term>0))e="შეიყვანე თანხა და ვადა";
+if(e){$("e").textContent=e;return;}
+const d={product:p.n,category:p.cat,amount:amt,term,branch:$("br").value,extra:$("ex").value};
+if(S.editId){Object.assign(DB.applications.find(a=>a.app_id===S.editId),d,{updated:now()});log("app_edited",S.editId);S.editId=null;S.screen="panel";draw();return;}
+const dup=active().find(a=>a.category===d.category);
+if(dup){S.draft=d;$("modal").innerHTML=`<div class="m"><div class="c"><h3>უკვე გაქვთ მიმდინარე განაცხადი</h3><p>კატეგორიაში „${dup.category}“ გაქვთ განაცხადი: <b>${dup.product}</b> (${dup.app_id}). გსურთ მისი შეცვლა ან გაუქმება და შემდეგ ახლის დამატება?</p><div class="r"><button onclick="S.editId='${dup.app_id}';S.draft=null;draw()">შეცვალე არსებული</button><button class="d" onclick="cancel('${dup.app_id}',1);create(S.draft)">გააუქმე და დაამატე ახალი</button></div><button class="s" style="width:100%;margin-top:8px" onclick="$('modal').innerHTML=''">დახურვა</button></div></div>`;return;}
+create(d);}
+function create(d){S.seq++;const a={app_id:"APP-"+S.seq,guid:uid(),client_id:S.cur.client_id,...d,status:"გაგზავნილია",channel:$("chan").value,request_type:d.category+" / "+d.product,created:now()};DB.applications.push(a);log("app_created",a.app_id+" "+a.channel);S.last=a;S.step="done";S.prod=d.product;S.screen="prod";draw();}
+function cancel(id,q){const a=DB.applications.find(a=>a.app_id===id);a.status="გაუქმებულია";a.cancelled_by="კლიენტი";log("app_cancelled",id);if(!q)draw();}
+
+function panel(){const c=S.cur,A=mine();return bc("ჩემი განაცხადები")+`<h1>ჩემი განაცხადები</h1><p class="mu">Client ID: ${c.client_id.slice(0,13)}… · ${c.verification}</p>
+${active().length?`<div class="c" style="background:var(--wb)"><b>თქვენ უკვე გაქვთ მიმდინარე განაცხადი.</b> შეგიძლიათ შეცვალოთ, გააუქმოთ ან დაამატოთ ახალი.</div>`:""}
+${A.map(a=>`<div class="c"><b>${a.product}</b> <span class="tag ${a.status==="გაუქმებულია"?"x":""}">${a.status}</span><div class="mu">${a.app_id} · ${a.amount} ₾ · ${a.term} თვე · ${a.branch}<br>${a.created} · ${a.channel}</div>
+${a.status==="გაგზავნილია"?`<div class="r"><button class="s" onclick="S.editId='${a.app_id}';S.prod=a.product==='x'?null:'${a.product}';S.step='form';S.screen='prod';draw()">რედაქტირება</button><button class="d" onclick="cancel('${a.app_id}')">გაუქმება</button></div>`:a.status==="დამუშავებაშია"?`<p class="mu">ოპერატორმა აიღო დასამუშავებლად — ცვლილება დაბლოკილია</p>`:""}</div>`).join("")||`<div class="c mu">განაცხადები არ გაქვთ</div>`}
+<button class="o" onclick="S.step='form';S.editId=null;S.screen=S.prod?'prod':'list';draw()">+ ახალი განაცხადი</button>`;}
+const tbl=r=>!r.length?`<p class="mu">ცარიელია</p>`:`<div class="t"><table><tr>${Object.keys(r[0]).map(k=>`<th>${k}</th>`).join("")}</tr>${r.map(x=>`<tr>${Object.values(x).map(v=>`<td>${String(v).slice(0,38)}</td>`).join("")}</tr>`).join("")}</table></div>`;
+function crm(){return `<h1>CRM ხედი · ბაზა</h1><p class="mu">ამ ცხრილებს კითხულობს CRM პლატფორმა</p>
+<div class="c"><h3>clients</h3>${tbl(DB.clients.map(c=>({client_id:c.client_id.slice(0,13),pid:c.pid,phone:c.phone,bank_client:c.is_bank_client,verification:c.verification,priority:c.priority})))}</div>
+<div class="c"><h3>consents (OTP-ით ვალიდირებული)</h3>${tbl(DB.consents)}</div>
+<div class="c"><h3>applications</h3>${tbl(DB.applications.map(a=>({app_id:a.app_id,guid:a.guid.slice(0,8),client:a.client_id.slice(0,8),request_type:a.request_type,amount:a.amount,term:a.term,branch:a.branch,channel:a.channel,status:a.status,created:a.created})))}${DB.applications.filter(a=>a.status==="გაგზავნილია").map(a=>`<button class="s" style="margin:8px 8px 0 0" onclick="DB.applications.find(x=>x.app_id==='${a.app_id}').status='დამუშავებაშია';log('operator_took','${a.app_id}');draw()">${a.app_id}: აიღე დასამუშავებლად</button>`).join("")}</div>
+<div class="c"><h3>events</h3>${tbl(DB.events.slice(-12))}</div>`;}
+draw();
+</script></body></html>
